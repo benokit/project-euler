@@ -3,7 +3,7 @@
 
 import Primes (primes)
 
-reduce :: (Integer, [Integer]) -> (Integer, [Integer])
+reduce :: (Int, [Int]) -> (Int, [Int])
 reduce (1, ps) = (1, ps)
 reduce (n, (p:ps)) = if mod n p == 0 then (div n p, (p:ps)) else (n, ps)
 

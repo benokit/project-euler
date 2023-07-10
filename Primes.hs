@@ -11,12 +11,11 @@ dropWhileEqual q@((x:xs), (y:ys))
     | x == y = dropWhileEqual (xs, ys)
     | otherwise = q
 
-nextPrimeAndSieve :: (Integer, [Integer]) -> (Integer, [Integer])
+nextPrimeAndSieve :: (Int, [Int]) -> (Int, [Int])
 nextPrimeAndSieve (p, sieve) = (p', sieve')
     where 
-        (n, s) = dropWhileEqual ([p + 1, p + 2 ..], sieve)
-        p' = head n
-        sieve' = mergeOrderedSequences s [p' * p', p' * p' + p' ..] 
+        ((p':_), sieve'') = dropWhileEqual ([p + 1, p + 2 ..], sieve)
+        sieve' = mergeOrderedSequences sieve'' [p' * p', p' * p' + p' ..] 
 
-primes :: [Integer]
+primes :: [Int]
 primes = map fst $ iterate nextPrimeAndSieve (2, [4, 6 ..])
