@@ -1,13 +1,8 @@
 module Primes where
 
-isInSieve :: Int -> [[Int]] -> Bool
-isInSieve n sieve = or $ map ((==) n . head) sieve
-
-rollSieve :: Int -> [[Int]] -> [[Int]]
-rollSieve n sieve = map (\s -> if head s == n then tail s else s) sieve
-
-primes = 2 : ps 3 [[4, 6 ..]]
-    where ps n s = if isInSieve n s then ps (n + 1) (rollSieve n s) else n : ps (n + 1) (s ++ [[n * n, n * n + n ..]])
+primes :: [Int]
+primes = 2 : sieve [3,5..]
+    where sieve (p:ns) = p : sieve [n | n <- ns, mod n p /= 0]
 
 factorize :: Int -> [Int]
 factorize n = fac n primes
