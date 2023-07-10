@@ -60,8 +60,8 @@ maxSubsequenceProduct :: Int -> [Int] -> Int
 maxSubsequenceProduct n xs = if length xs < n then 0 else foldl1 max $ head $ drop (n - 1) $ products xs (tail xs)
   where products xs ys = xs : products (zipWith (*) xs ys) (tail ys)
 
-maxSubsequenceProductInGrid :: [[Int]] -> Int
-maxSubsequenceProductInGrid grid = foldl1 max $ map (maxSubsequenceProduct 4) grid
+maxSubsequencesProduct :: Int -> [[Int]] -> Int
+maxSubsequencesProduct n xss = foldl1 max $ map (maxSubsequenceProduct n) xss
 
 main :: IO ()
-main = print $ foldl1 max $ map maxSubsequenceProductInGrid [grid0, grid45, grid90, grid135] 
+main = print $ foldl1 max $ map (maxSubsequencesProduct 4) [grid0, grid45, grid90, grid135] 
