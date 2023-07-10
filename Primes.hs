@@ -1,24 +1,13 @@
 module Primes where
 
-mergeOrderedSequences :: Ord a => [a] -> [a] -> [a]
-mergeOrderedSequences (x:xs) (y:ys)
-    | x < y = x : mergeOrderedSequences xs (y:ys)
-    | x > y = y : mergeOrderedSequences (x:xs) ys
-    | otherwise = x : mergeOrderedSequences xs ys
+isInSieve :: Int -> [[Int]] -> Bool
+isInSieve n sieve = or $ map ((==) n . head) sieve
 
-dropWhileEqual :: Eq a => ([a], [a]) -> ([a], [a])
-dropWhileEqual q@((x:xs), (y:ys))
-    | x == y = dropWhileEqual (xs, ys)
-    | otherwise = q
+rollSieve :: Int -> [[Int]] -> [[Int]]
+rollSieve n sieve = map (\s -> if head s == n then tail s else s) sieve
 
-nextPrimeAndSieve :: (Int, [Int]) -> (Int, [Int])
-nextPrimeAndSieve (p, sieve) = (p', sieve')
-    where 
-        ((p':_), sieve'') = dropWhileEqual ([p + 1, p + 2 ..], sieve)
-        sieve' = mergeOrderedSequences sieve'' [p' * p', p' * p' + p' ..] 
-
-primes :: [Int]
-primes = map fst $ iterate nextPrimeAndSieve (2, [4, 6 ..])
+primes = 2 : ps 3 [[4, 6 ..]]
+    where ps n s = if isInSieve n s then ps (n + 1) (rollSieve n s) else n : ps (n + 1) (s ++ [[n * n, n * n + n ..]])
 
 factorize :: Int -> [Int]
 factorize n = fac n primes
