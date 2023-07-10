@@ -1,13 +1,7 @@
 -- $2520$ is the smallest number that can be divided by each of the numbers from $1$ to $10$ without any remainder.
 -- What is the smallest positive number that is evenly divisible by all of the numbers from $1$ to $20$?
 
-import Primes (primes)
-
-factorize :: Int -> [Int]
-factorize n = fac n primes
-    where
-        fac 1 _ = [] 
-        fac n' (p:ps) = if mod n' p == 0 then p : fac (div n' p) (p:ps) else fac n' ps
+import Primes (factorize)
 
 compress :: Eq a => [a] -> [(a,Int)]
 compress [] = []
