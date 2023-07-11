@@ -27,7 +27,7 @@ combinations xs = (sum xs) + (spark xs (tail xs))
 
 multiplicities :: Eq a => [a] -> [Int]
 multiplicities [] = []
-multiplicities (x:xs) = (length $ takeWhile ((==) x) xs) : (multiplicities $ dropWhile ((==) x) xs)
+multiplicities (x:xs) = (1 + (length $ takeWhile ((==) x) xs)) : (multiplicities $ dropWhile ((==) x) xs)
 
 main :: IO ()
-main = print $ head $ dropWhile ((<=500) . combinations . multiplicities . factorize) $ tail triangularNumbers
+main = print $ head $ dropWhile ((<500) . combinations . multiplicities . factorize) $ tail triangularNumbers
