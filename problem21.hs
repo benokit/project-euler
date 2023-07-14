@@ -18,16 +18,13 @@ merge (x:xs) (y:ys)
     | x < y = y : merge (x:xs) (dropWhile (== y) ys)
     | otherwise = x : merge (dropWhile (== x) xs) (dropWhile (== y) ys)
 
-divisors' :: Int -> [Int]
-divisors' 1 = [1]
-divisors' n = let 
+divisors :: Int -> [Int]
+divisors 1 = [1]
+divisors n = let 
     q = smallestDivisor n
     p = div n q
     ds = p : divisors p in 
         if n == q then [q, 1] else merge (map (* q) ds) ds
-
-divisors :: Int -> [Int]
-divisors n = (map divisors' [1..]) !! (n - 1)
 
 ds :: [Int]
 ds = 1 : map (sum . tail . divisors) [2..]
