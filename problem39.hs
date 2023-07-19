@@ -7,9 +7,6 @@ For which value of $p \le 1000$, is the number of solutions maximised?
 import Data.List (maximumBy)
 import Data.Ord (comparing)
 
-f :: Int -> Int -> Int -> Int
-f o a b = o * o - 2 * (o * (a + b) - a * b)
-
 test :: Int -> (Int, Int) -> Bool
 test p (a, b) = let c = p - a - b in a * a + b * b == c * c
 
